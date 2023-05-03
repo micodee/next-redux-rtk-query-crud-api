@@ -1,10 +1,10 @@
 import Head from "next/head";
 
-import { useGetAllPostQuery } from "@/services/post";
+import { useGetPostByIdQuery } from "@/services/post";
 
-export default function Home() {
+export default function ByID() {
   // const { data: responseInfo } = useGetAllPostQuery();
-  const getData = useGetAllPostQuery();
+  const getData = useGetPostByIdQuery(5);
 
   if (getData.isLoading) return <div>Loading...</div>;
   if (getData.isError) return <h2>An error occured{getData.error.error}</h2>;
@@ -18,18 +18,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>Redux Toolkit - RTK Query (Get All Data)</h1>
-        {getData.data?.map((obj, index) => {
-          return (
-            <div key={index} style={{ fontWeight: "normal", margin: "1rem" }}>
+        <h1>Redux Toolkit - RTK Query (Get By ID)</h1>
+            <div style={{ fontWeight: "normal", margin: "1rem" }}>
               <h3>
-                {index + 1} {obj.title}
+                {getData.data.id} {getData.data.title}
               </h3>
-              <p>{obj.body}</p>
+              <p>{getData.data.body}</p>
               <hr />
             </div>
-          );
-        })}
       </div>
     </>
   );

@@ -1,13 +1,23 @@
 import Head from "next/head";
 
-import { useGetAllPostQuery } from "@/services/post";
+import { useUpdatePostMutation } from "@/services/post";
 
-export default function Home() {
+export default function PostUpdate() {
   // const { data: responseInfo } = useGetAllPostQuery();
-  const getData = useGetAllPostQuery();
+  const [updateData, getData] = useUpdatePostMutation();
 
+  console.log("Success: ",getData.isSuccess);
+  console.log("Data: ",getData.data);
+  
   if (getData.isLoading) return <div>Loading...</div>;
   if (getData.isError) return <h2>An error occured{getData.error.error}</h2>;
+
+  const item = {
+   title: "update title",
+   body: "update body",
+   userId: 12,
+   id: 1,
+  }
 
   return (
     <>
@@ -18,18 +28,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>Redux Toolkit - RTK Query (Get All Data)</h1>
-        {getData.data?.map((obj, index) => {
-          return (
-            <div key={index} style={{ fontWeight: "normal", margin: "1rem" }}>
-              <h3>
-                {index + 1} {obj.title}
-              </h3>
-              <p>{obj.body}</p>
-              <hr />
-            </div>
-          );
-        })}
+        <h1>Redux Toolkit - RTK Query (Update Data)</h1>
+          <button onClick={() => {updateData(item)}}>Udpate Post</button>
       </div>
     </>
   );

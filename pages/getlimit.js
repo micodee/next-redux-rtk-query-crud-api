@@ -1,10 +1,10 @@
 import Head from "next/head";
 
-import { useGetAllPostQuery } from "@/services/post";
+import { useGetPostByLimitQuery } from "@/services/post";
 
-export default function Home() {
+export default function Limit() {
   // const { data: responseInfo } = useGetAllPostQuery();
-  const getData = useGetAllPostQuery();
+  const getData = useGetPostByLimitQuery(10);
 
   if (getData.isLoading) return <div>Loading...</div>;
   if (getData.isError) return <h2>An error occured{getData.error.error}</h2>;
@@ -18,7 +18,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <h1>Redux Toolkit - RTK Query (Get All Data)</h1>
+        <h1>Redux Toolkit - RTK Query (Get Limited Data)</h1>
         {getData.data?.map((obj, index) => {
           return (
             <div key={index} style={{ fontWeight: "normal", margin: "1rem" }}>
